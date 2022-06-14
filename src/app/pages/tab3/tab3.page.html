@@ -1,0 +1,76 @@
+<ion-header [translucent]="true" mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>
+      Favoritos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense" mode="ios" class="ion-no-border">
+    <ion-toolbar>
+      <ion-title size="large">Favoritos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+    <!-- Default Segment -->
+  <ion-segment [value]="selectedSegment" (ionChange)="segmentChanged($event)" scrollable mode="md">
+    <ion-segment-button value="notificaciones">
+      <ion-label>Notificaciones</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="artistas">
+      <ion-label>Artistas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="recomendaciones">
+      <ion-label>Recomendaciones</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <app-articles [articles]="articles" [hidden]="indicadorNotificaciones"></app-articles>
+
+  <ion-content [hidden]="indicadorArtistas">
+    <ion-row>
+      <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-card *ngFor="let artist of artists">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-row class="ion-align-items-center" >
+                Listeners: {{artist.listeners}}
+                <ion-col align="right">
+                  <ion-button (click)="onOpenMenu(artist)" fill="clear" >
+                    <ion-icon slot="icon-only" name="ellipsis-vertical-outline" ></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-subtitle>
+            <ion-card-title>{{artist.name}}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-content>
+
+  <ion-content [hidden]="indicadorRecomendaciones" >
+    <ion-row>
+      <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-card *ngFor="let similarArtist of similarArtists">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-row class="ion-align-items-center" >
+                Match: {{similarArtist.match}}
+                <ion-col align="right">
+                  <ion-button (click)="onOpenMenu(similarArtist)" fill="clear" >
+                    <ion-icon slot="icon-only" name="ellipsis-vertical-outline" ></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-subtitle>
+            <ion-card-title>{{similarArtist.name}}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-content>
+
+</ion-content>
